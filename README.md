@@ -6,7 +6,10 @@ Open `index.html` in a modern browser to run the trainer.
 
 ## Auto Deploy Script
 
-The `auto_deploy.sh` script pulls the latest changes from the Git repository and serves the project using Python's built-in HTTP server on port 8000:
+The `auto_deploy.sh` script pulls the latest changes from the Git repository and
+serves the project using the [`serve`](https://www.npmjs.com/package/serve)
+package on port 8000. If the `serve` command is not available, the script will
+install it globally via `npm`:
 
 ```bash
 ./auto_deploy.sh
