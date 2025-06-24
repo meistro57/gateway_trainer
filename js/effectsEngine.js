@@ -5,6 +5,12 @@ let effectSpeed = 1.0;
 
 export function applyEffect(effect, leftFreq, rightFreq, time) {
   switch (effect) {
+    case 'sweep':
+      const sweep = Math.sin(time * effectSpeed * 0.001) * 20;
+      return [leftFreq + sweep, rightFreq + sweep];
+    case 'hover':
+      const hover = Math.sin(time * effectSpeed * 0.003) * 3;
+      return [leftFreq + hover, rightFreq - hover];
     case 'wobble':
       const wobble = Math.sin(time * effectSpeed * 0.002) * 2;
       return [leftFreq + wobble, rightFreq - wobble];

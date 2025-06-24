@@ -9,12 +9,22 @@ const leftFreqSlider = document.getElementById('leftFreq');
 const offsetSlider = document.getElementById('offsetFreq');
 const effectModeSelect = document.getElementById('effectMode');
 const effectSpeedSlider = document.getElementById('effectSpeed');
+const monroeLevelSelect = document.getElementById('monroeLevel');
 const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
 const bookmarkBtn = document.getElementById('bookmarkBtn');
 const volumeSlider = document.getElementById('volume');
 const leftFreqDisplay = document.getElementById('leftFreqDisplay');
 const rightFreqDisplay = document.getElementById('rightFreqDisplay');
+
+const monroeLevels = {
+  focus3: { base: 200, offset: 3 },
+  focus10: { base: 200, offset: 10 },
+  focus12: { base: 200, offset: 12 },
+  focus15: { base: 200, offset: 15 },
+  focus21: { base: 200, offset: 21 },
+  focus27: { base: 200, offset: 27 },
+};
 
 let baseFreq = parseFloat(leftFreqSlider.value);
 let offset = parseFloat(offsetSlider.value);
@@ -26,6 +36,13 @@ offsetSlider.oninput = updateFrequencies;
 effectModeSelect.onchange = () => setEffect(effectModeSelect.value);
 effectSpeedSlider.oninput = () => setEffectSpeed(parseFloat(effectSpeedSlider.value));
 volumeSlider.oninput = () => setVolume(parseFloat(volumeSlider.value));
+monroeLevelSelect.onchange = () => {
+  if (monroeLevelSelect.value === 'none') return;
+  const preset = monroeLevels[monroeLevelSelect.value];
+  leftFreqSlider.value = preset.base;
+  offsetSlider.value = preset.offset;
+  updateFrequencies();
+};
 
 let isPlaying = false;
 
