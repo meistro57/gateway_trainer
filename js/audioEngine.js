@@ -57,5 +57,5 @@ export function setFrequencies(leftFreq, rightFreq) {
 }
 
 export function getAnalyserNodes() {
-  return { left: analyserL, right: analyserR };
+  return { leftAnalyser: analyserL, rightAnalyser: analyserR };
 }
