@@ -1,7 +1,7 @@
 // File: js/main.js
 
 import { startAudio, stopAudio, setFrequencies, getAnalyserNodes, setVolume } from './audioEngine.js';
-import { applyEffect, setEffect, getEffect, setEffectSpeed } from './effectsEngine.js';
+import { applyEffect, setEffect, getEffect, setEffectSpeed, setSweepRange, setHoverRange } from './effectsEngine.js';
 import { saveBookmark } from './bookmarkManager.js';
 import { initVisualizer } from './visualizer.js';
 
@@ -9,6 +9,8 @@ const leftFreqSlider = document.getElementById('leftFreq');
 const offsetSlider = document.getElementById('offsetFreq');
 const effectModeSelect = document.getElementById('effectMode');
 const effectSpeedSlider = document.getElementById('effectSpeed');
+const sweepRangeSlider = document.getElementById('sweepRange');
+const hoverRangeSlider = document.getElementById('hoverRange');
 const monroeLevelSelect = document.getElementById('monroeLevel');
 const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
@@ -28,6 +30,8 @@ const monroeLevels = {
 
 let baseFreq = parseFloat(leftFreqSlider.value);
 let offset = parseFloat(offsetSlider.value);
+setSweepRange(parseFloat(sweepRangeSlider.value));
+setHoverRange(parseFloat(hoverRangeSlider.value));
 leftFreqDisplay.textContent = `${baseFreq} Hz`;
 rightFreqDisplay.textContent = `${baseFreq + offset} Hz`;
 
@@ -35,6 +39,8 @@ leftFreqSlider.oninput = updateFrequencies;
 offsetSlider.oninput = updateFrequencies;
 effectModeSelect.onchange = () => setEffect(effectModeSelect.value);
 effectSpeedSlider.oninput = () => setEffectSpeed(parseFloat(effectSpeedSlider.value));
+sweepRangeSlider.oninput = () => setSweepRange(parseFloat(sweepRangeSlider.value));
+hoverRangeSlider.oninput = () => setHoverRange(parseFloat(hoverRangeSlider.value));
 volumeSlider.oninput = () => setVolume(parseFloat(volumeSlider.value));
 monroeLevelSelect.onchange = () => {
   if (monroeLevelSelect.value === 'none') return;
@@ -66,6 +72,8 @@ bookmarkBtn.onclick = () => {
     offset: parseFloat(offsetSlider.value),
     effect: effectModeSelect.value,
     speed: parseFloat(effectSpeedSlider.value),
+    sweepRange: parseFloat(sweepRangeSlider.value),
+    hoverRange: parseFloat(hoverRangeSlider.value),
   };
   saveBookmark(bookmark);
 };
