@@ -1,6 +1,6 @@
 // File: js/main.js
 
-import { startAudio, stopAudio, setFrequencies, getAnalyserNodes } from './audioEngine.js';
+import { startAudio, stopAudio, setFrequencies, getAnalyserNodes, setVolume } from './audioEngine.js';
 import { applyEffect, setEffect, getEffect, setEffectSpeed } from './effectsEngine.js';
 import { saveBookmark } from './bookmarkManager.js';
 import { initVisualizer } from './visualizer.js';
@@ -12,20 +12,26 @@ const effectSpeedSlider = document.getElementById('effectSpeed');
 const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
 const bookmarkBtn = document.getElementById('bookmarkBtn');
+const volumeSlider = document.getElementById('volume');
+const leftFreqDisplay = document.getElementById('leftFreqDisplay');
+const rightFreqDisplay = document.getElementById('rightFreqDisplay');
 
 let baseFreq = parseFloat(leftFreqSlider.value);
 let offset = parseFloat(offsetSlider.value);
+leftFreqDisplay.textContent = `${baseFreq} Hz`;
+rightFreqDisplay.textContent = `${baseFreq + offset} Hz`;
 
 leftFreqSlider.oninput = updateFrequencies;
 offsetSlider.oninput = updateFrequencies;
 effectModeSelect.onchange = () => setEffect(effectModeSelect.value);
 effectSpeedSlider.oninput = () => setEffectSpeed(parseFloat(effectSpeedSlider.value));
+volumeSlider.oninput = () => setVolume(parseFloat(volumeSlider.value));
 
 let isPlaying = false;
 
 startBtn.onclick = () => {
   isPlaying = true;
-  startAudio(baseFreq, baseFreq + offset);
+  startAudio(baseFreq, baseFreq + offset, parseFloat(volumeSlider.value));
   const { leftAnalyser, rightAnalyser } = getAnalyserNodes();
   initVisualizer(leftAnalyser, rightAnalyser);
   requestAnimationFrame(updateLoop);
@@ -51,11 +57,15 @@ function updateFrequencies() {
   baseFreq = parseFloat(leftFreqSlider.value);
   offset = parseFloat(offsetSlider.value);
   setFrequencies(baseFreq, baseFreq + offset);
+  leftFreqDisplay.textContent = `${baseFreq} Hz`;
+  rightFreqDisplay.textContent = `${baseFreq + offset} Hz`;
 }
 
 function updateLoop(time) {
   if (!isPlaying) return;
   const [l, r] = applyEffect(getEffect(), baseFreq, baseFreq + offset, time);
   setFrequencies(l, r);
+  leftFreqDisplay.textContent = `${l.toFixed(2)} Hz`;
+  rightFreqDisplay.textContent = `${r.toFixed(2)} Hz`;
   requestAnimationFrame(updateLoop);
 }
