@@ -7,8 +7,9 @@ let gainNodeL;
 let gainNodeR;
 let analyserL;
 let analyserR;
+let volume = 0.5;
 
-export function startAudio(leftFreq, rightFreq) {
+export function startAudio(leftFreq, rightFreq, vol = 0.5) {
   stopAudio(); // Clean previous
 
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -26,14 +27,25 @@ export function startAudio(leftFreq, rightFreq) {
   oscillatorL.frequency.setValueAtTime(leftFreq, audioCtx.currentTime);
   oscillatorR.frequency.setValueAtTime(rightFreq, audioCtx.currentTime);
 
-  gainNodeL.gain.value = 0.5;
-  gainNodeR.gain.value = 0.5;
+  volume = vol;
+  gainNodeL.gain.value = volume;
+  gainNodeR.gain.value = volume;
 
   oscillatorL.connect(gainNodeL).connect(analyserL).connect(audioCtx.destination);
   oscillatorR.connect(gainNodeR).connect(analyserR).connect(audioCtx.destination);
 
   oscillatorL.start();
   oscillatorR.start();
+}
+
+export function setVolume(vol) {
+  volume = vol;
+  if (gainNodeL) gainNodeL.gain.value = volume;
+  if (gainNodeR) gainNodeR.gain.value = volume;
+}
+
+export function getVolume() {
+  return volume;
 }
 
 export function stopAudio() {

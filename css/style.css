@@ -18,6 +18,12 @@ body {
   margin: 20px 0;
 }
 
+.sliders label span {
+  display: inline-block;
+  width: 70px;
+  margin-left: 10px;
+}
+
 canvas {
   background: #111;
 }
