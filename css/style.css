@@ -28,3 +28,14 @@ body {
 canvas {
   background: #111;
 }
+
+.disclaimer {
+  font-size: 0.85em;
+  color: #ccc;
+  margin-top: 20px;
+}
+
+.bookmark-note {
+  font-size: 0.85em;
+  color: #ccc;
+}
