@@ -10,13 +10,14 @@ A simple browser-based tool for experimenting with binaural beats and basic audi
 - **Audio Effects**: Choose from several effects to modulate the tones:
   - **Sweep**: Smoothly modulates both channels across a user-defined range.
   - **Hover**: Applies a gentle opposing modulation to each channel.
-  - **Wobble**: Adds a subtle, rapid back-and-forth to the tones.
+  - **Wobble**: Adds a subtle, rapid back-and-forth to the tones with an adjustable range.
   - **Mindfuck**: Dramatic, rapid modulation for experimental results.
   - **None**: Plain, unmodulated binaural tones.
 - **Live Frequency Display**: See the current left and right channel frequencies in real time.
 - **Volume Control**: Fine-tune output volume.
 - **Monroe Institute Focus Levels**: Instantly set recommended frequencies for Focus 3, 10, 12, 15, 21, and 27 using a dropdown.
-- **Effect Parameter Sliders**: Tune the speed, sweep range, and hover range for effects.
+- **Effect Parameter Sliders**: Tune the speed, sweep range, hover range, and wobble range for effects.
+- **Fine-Grained Controls**: Adjust left frequency to 0.1 Hz and offsets to 0.01 Hz for precise tuning.
 - **Bookmarking**: Save and recall favorite settings. Bookmarks are stored in your browser.
 - **Audio Visualizer**: Real-time frequency visualizations for left and right channels.
 - **Responsive UI**: Clean, browser-friendly interface.

@@ -1,14 +1,19 @@
 body {
   font-family: sans-serif;
-  background-color: #222;
+  background: radial-gradient(circle at top, #333, #000);
   color: #eee;
   text-align: center;
   padding: 20px;
+  min-height: 100vh;
 }
 
 .container {
   max-width: 600px;
   margin: 0 auto;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #000;
 }
 
 .sliders,
@@ -27,6 +32,21 @@ body {
 
 canvas {
   background: #111;
+}
+
+button {
+  background: #444;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #666;
 }
 
 .disclaimer {

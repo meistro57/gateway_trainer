@@ -1,7 +1,7 @@
 // File: js/main.js
 
 import { startAudio, stopAudio, setFrequencies, getAnalyserNodes, setVolume } from './audioEngine.js';
-import { applyEffect, setEffect, getEffect, setEffectSpeed, setSweepRange, setHoverRange } from './effectsEngine.js';
+import { applyEffect, setEffect, getEffect, setEffectSpeed, setSweepRange, setHoverRange, setWobbleRange } from './effectsEngine.js';
 import { saveBookmark } from './bookmarkManager.js';
 import { initVisualizer } from './visualizer.js';
 
@@ -11,6 +11,7 @@ const effectModeSelect = document.getElementById('effectMode');
 const effectSpeedSlider = document.getElementById('effectSpeed');
 const sweepRangeSlider = document.getElementById('sweepRange');
 const hoverRangeSlider = document.getElementById('hoverRange');
+const wobbleRangeSlider = document.getElementById('wobbleRange');
 const monroeLevelSelect = document.getElementById('monroeLevel');
 const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
@@ -32,8 +33,9 @@ let baseFreq = parseFloat(leftFreqSlider.value);
 let offset = parseFloat(offsetSlider.value);
 setSweepRange(parseFloat(sweepRangeSlider.value));
 setHoverRange(parseFloat(hoverRangeSlider.value));
-leftFreqDisplay.textContent = `${baseFreq} Hz`;
-rightFreqDisplay.textContent = `${baseFreq + offset} Hz`;
+setWobbleRange(parseFloat(wobbleRangeSlider.value));
+leftFreqDisplay.textContent = `${baseFreq.toFixed(2)} Hz`;
+rightFreqDisplay.textContent = `${(baseFreq + offset).toFixed(2)} Hz`;
 
 leftFreqSlider.oninput = updateFrequencies;
 offsetSlider.oninput = updateFrequencies;
@@ -41,6 +43,7 @@ effectModeSelect.onchange = () => setEffect(effectModeSelect.value);
 effectSpeedSlider.oninput = () => setEffectSpeed(parseFloat(effectSpeedSlider.value));
 sweepRangeSlider.oninput = () => setSweepRange(parseFloat(sweepRangeSlider.value));
 hoverRangeSlider.oninput = () => setHoverRange(parseFloat(hoverRangeSlider.value));
+wobbleRangeSlider.oninput = () => setWobbleRange(parseFloat(wobbleRangeSlider.value));
 volumeSlider.oninput = () => setVolume(parseFloat(volumeSlider.value));
 monroeLevelSelect.onchange = () => {
   if (monroeLevelSelect.value === 'none') return;
@@ -74,6 +77,7 @@ bookmarkBtn.onclick = () => {
     speed: parseFloat(effectSpeedSlider.value),
     sweepRange: parseFloat(sweepRangeSlider.value),
     hoverRange: parseFloat(hoverRangeSlider.value),
+    wobbleRange: parseFloat(wobbleRangeSlider.value),
   };
   saveBookmark(bookmark);
 };
@@ -82,8 +86,8 @@ function updateFrequencies() {
   baseFreq = parseFloat(leftFreqSlider.value);
   offset = parseFloat(offsetSlider.value);
   setFrequencies(baseFreq, baseFreq + offset);
-  leftFreqDisplay.textContent = `${baseFreq} Hz`;
-  rightFreqDisplay.textContent = `${baseFreq + offset} Hz`;
+  leftFreqDisplay.textContent = `${baseFreq.toFixed(2)} Hz`;
+  rightFreqDisplay.textContent = `${(baseFreq + offset).toFixed(2)} Hz`;
 }
 
 function updateLoop(time) {
