@@ -2,6 +2,8 @@
 
 A simple browser-based tool for experimenting with binaural beats and basic audio effects.
 
+> **Disclaimer:** Use headphones at a comfortable volume and take regular breaks. This app is for experimentation only.
+
 ## Features
 
 - **Binaural Beat Generator**: Adjust the base frequency and offset between left and right channels using intuitive sliders.
@@ -22,6 +24,11 @@ A simple browser-based tool for experimenting with binaural beats and basic audi
 ## Getting Started
 
 Open `index.html` in a modern browser to run the trainer. No installation required.
+
+## Bookmarks
+
+Click the **Bookmark** button to save your current settings. Bookmarks are stored in your browser. You can view them in the developer console with `getBookmarks()` and reapply one with `loadBookmark(index)`.
+
 
 ## Auto Deploy Script
 
