@@ -53,6 +53,57 @@ monroeLevelSelect.onchange = () => {
   updateFrequencies();
 };
 
+function enableManualInput(displayEl, getter, setter) {
+  displayEl.addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'number';
+    input.className = 'freq-input';
+    input.value = getter().toFixed(2);
+    input.step = '0.01';
+    input.inputMode = 'decimal';
+    displayEl.replaceWith(input);
+    input.focus();
+
+    const commit = () => {
+      const val = parseFloat(input.value);
+      if (!isNaN(val)) {
+        setter(val);
+        updateFrequencies();
+      }
+      input.replaceWith(displayEl);
+    };
+
+    input.addEventListener('blur', commit);
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') commit();
+      if (e.key === 'Escape') input.replaceWith(displayEl);
+    });
+  });
+}
+
+enableManualInput(
+  leftFreqDisplay,
+  () => baseFreq,
+  (val) => {
+    const min = parseFloat(leftFreqSlider.min);
+    const max = parseFloat(leftFreqSlider.max);
+    const clamped = Math.min(Math.max(val, min), max);
+    leftFreqSlider.value = clamped;
+  }
+);
+
+enableManualInput(
+  rightFreqDisplay,
+  () => baseFreq + offset,
+  (val) => {
+    const min = parseFloat(offsetSlider.min);
+    const max = parseFloat(offsetSlider.max);
+    let newOffset = val - baseFreq;
+    newOffset = Math.min(Math.max(newOffset, min), max);
+    offsetSlider.value = newOffset;
+  }
+);
+
 let isPlaying = false;
 
 startBtn.onclick = () => {
