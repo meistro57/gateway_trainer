@@ -13,6 +13,7 @@ const sweepRangeSlider = document.getElementById('sweepRange');
 const hoverRangeSlider = document.getElementById('hoverRange');
 const wobbleRangeSlider = document.getElementById('wobbleRange');
 const monroeLevelSelect = document.getElementById('monroeLevel');
+const preset528Checkbox = document.getElementById('preset528');
 const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
 const bookmarkBtn = document.getElementById('bookmarkBtn');
@@ -37,8 +38,14 @@ setWobbleRange(parseFloat(wobbleRangeSlider.value));
 leftFreqDisplay.textContent = `${baseFreq.toFixed(2)} Hz`;
 rightFreqDisplay.textContent = `${(baseFreq + offset).toFixed(2)} Hz`;
 
-leftFreqSlider.oninput = updateFrequencies;
-offsetSlider.oninput = updateFrequencies;
+leftFreqSlider.oninput = () => {
+  preset528Checkbox.checked = false;
+  updateFrequencies();
+};
+offsetSlider.oninput = () => {
+  preset528Checkbox.checked = false;
+  updateFrequencies();
+};
 effectModeSelect.onchange = () => setEffect(effectModeSelect.value);
 effectSpeedSlider.oninput = () => setEffectSpeed(parseFloat(effectSpeedSlider.value));
 sweepRangeSlider.oninput = () => setSweepRange(parseFloat(sweepRangeSlider.value));
@@ -46,11 +53,21 @@ hoverRangeSlider.oninput = () => setHoverRange(parseFloat(hoverRangeSlider.value
 wobbleRangeSlider.oninput = () => setWobbleRange(parseFloat(wobbleRangeSlider.value));
 volumeSlider.oninput = () => setVolume(parseFloat(volumeSlider.value));
 monroeLevelSelect.onchange = () => {
+  preset528Checkbox.checked = false;
   if (monroeLevelSelect.value === 'none') return;
   const preset = monroeLevels[monroeLevelSelect.value];
   leftFreqSlider.value = preset.base;
   offsetSlider.value = preset.offset;
   updateFrequencies();
+};
+
+preset528Checkbox.onchange = () => {
+  if (preset528Checkbox.checked) {
+    monroeLevelSelect.value = 'none';
+    leftFreqSlider.value = 520;
+    offsetSlider.value = 8;
+    updateFrequencies();
+  }
 };
 
 function enableManualInput(displayEl, getter, setter) {
